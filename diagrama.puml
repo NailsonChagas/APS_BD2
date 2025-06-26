@@ -1,0 +1,88 @@
+@startuml
+' Configurações
+hide circle
+skinparam linetype ortho
+left to right direction
+
+' Entidades
+entity Clientes {
+  * cpf_cnpj VARCHAR(20)
+  --
+  * nome VARCHAR(100)
+  * endereco VARCHAR(200)
+  * telefone VARCHAR(20)
+  * email VARCHAR(100)
+  * data_cadastro TIMESTAMP
+}
+
+entity Fornecedores {
+  * cnpj VARCHAR(20)
+  --
+  * nome_empresa VARCHAR(100)
+  * localizacao VARCHAR(200)
+  * contato VARCHAR(100)
+  * email VARCHAR(100)
+  * telefone VARCHAR(20)
+  * ativo BOOLEAN
+}
+
+entity Transacao {
+  * id_transacao SERIAL
+  --
+  * id_cliente VARCHAR(20)
+  * id_fornecedor VARCHAR(20)
+  * tipo_transacao VARCHAR(10)
+  * valor_total DECIMAL(12,2)
+  * data TIMESTAMP
+  * forma_pagamento VARCHAR(50)
+  observacoes TEXT
+}
+
+entity ItemTransacao {
+  * id_item_transacao SERIAL
+  --
+  * id_transacao INT
+  * id_produto VARCHAR(20)
+  * quantidade INT
+  * preco_unitario DECIMAL(10,2)
+  * preco_total DECIMAL(12,2)
+  id_promocao INT
+}
+
+entity Produto {
+  * id_produto VARCHAR(20)
+  --
+  * nome VARCHAR(100)
+  descricao TEXT
+  * preco DECIMAL(10,2)
+  * ativo BOOLEAN
+}
+
+entity Estoque {
+  * id_estoque SERIAL
+  --
+  * id_produto VARCHAR(20)
+  * quantidade INT
+  * ultima_atualizacao TIMESTAMP
+}
+
+entity Promocoes {
+  * id_promocao SERIAL
+  --
+  * nome_promocao VARCHAR(100)
+  * data_inicio TIMESTAMP
+  * data_fim TIMESTAMP
+  * porcentagem DECIMAL(5,2)
+  * produtos_em_promocao VARCHAR(20)[]
+  * ativa BOOLEAN
+}
+
+' Relacionamentos
+Clientes |o--o{ Transacao
+Fornecedores |o--o{ Transacao
+Transacao ||--o{ ItemTransacao
+Produto ||--|| Estoque
+Produto ||--o{ ItemTransacao
+Produto }o--o{ Promocoes
+ItemTransacao }o--|| Promocoes
+@enduml
