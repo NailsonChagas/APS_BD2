@@ -57,7 +57,7 @@ DECLARE
     promocao_record RECORD;
     promocao_id INT;
 BEGIN
-    -- Primeira parte: cálculo de preços (original da tr_calcular_preco_com_promocoes)
+    -- Cálculo de preços (original da tr_calcular_preco_com_promocoes)
     SELECT preco INTO preco_base FROM Produto WHERE id_produto = NEW.id_produto;
     
     IF preco_base IS NULL THEN
@@ -88,7 +88,7 @@ BEGIN
     NEW.preco_unitario := preco_final;
     NEW.preco_total := NEW.preco_unitario * NEW.quantidade;
     
-    -- Segunda parte: atualização do total da transação (original da tr_atualizar_total_transacao)
+    -- Atualização do total da transação (original da tr_atualizar_total_transacao)
     UPDATE Transacao
     SET valor_total = valor_total + NEW.preco_total
     WHERE id_transacao = NEW.id_transacao;
