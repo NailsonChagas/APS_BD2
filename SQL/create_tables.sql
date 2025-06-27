@@ -21,7 +21,7 @@ CREATE TABLE Produto (
     id_produto VARCHAR(20) PRIMARY KEY,  -- código de barras
     nome VARCHAR(100) NOT NULL,
     descricao TEXT,
-    preco DECIMAL(10,2) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL DEFAULT 0.0,
     ativo BOOLEAN DEFAULT TRUE
 );
 
@@ -51,7 +51,7 @@ CREATE TABLE Transacao (
     id_cliente VARCHAR(20), 
     id_fornecedor VARCHAR(20),  
     tipo_transacao VARCHAR(10) NOT NULL CHECK (tipo_transacao IN ('VENDA', 'COMPRA')),
-    valor_total DECIMAL(12,2) NOT NULL,
+    valor_total DECIMAL(12,2) NOT NULL DEFAULT 0.0,
     data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     forma_pagamento VARCHAR(50),
     observacoes TEXT,
@@ -68,8 +68,8 @@ CREATE TABLE ItemTransacao (
     id_transacao INT NOT NULL,
     id_produto VARCHAR(20) NOT NULL,
     quantidade INT NOT NULL,
-    preco_unitario DECIMAL(10,2) NOT NULL,
-    preco_total DECIMAL(12,2) NOT NULL,
+    preco_unitario DECIMAL(10,2) NOT NULL DEFAULT 0.0,
+    preco_total DECIMAL(12,2) NOT NULL DEFAULT 0.0,
     id_promocao INT[],  -- array de ids de promoçoes
     FOREIGN KEY (id_transacao) REFERENCES Transacao(id_transacao),
     FOREIGN KEY (id_produto) REFERENCES Produto(id_produto),

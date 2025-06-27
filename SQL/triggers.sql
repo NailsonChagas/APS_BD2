@@ -99,11 +99,20 @@ FOR EACH ROW
 EXECUTE FUNCTION calcular_preco();
 -- End Trigger 2: calcular o preço unitário e total do ItemTransacao com base nos descontos existentes
 
--- Start Trigger 3:
--- End Trigger 3:
+-- Start Trigger 3: calculcar o valor total da transação baseado em seus ItemTransacao
+CREATE OR REPLACE FUNCTION atualizar_total_transacao()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE Transacao
+    SET valor_total = valor_total + NEW.preco_total
+    WHERE id_transacao = NEW.id_transacao;
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
--- Start Trigger 4:
--- End Trigger 4:
-
--- Start Trigger 5:
--- End Trigger 5:
+CREATE TRIGGER tr_atualizar_total_transacao
+AFTER INSERT ON ItemTransacao
+FOR EACH ROW
+EXECUTE FUNCTION atualizar_total_transacao();
+-- End Trigger 3: calculcar o valor total da transação baseado em seus ItemTransacao
