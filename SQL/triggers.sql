@@ -103,5 +103,25 @@ FOR EACH ROW
 EXECUTE FUNCTION calcular_preco_e_atualizar_transacao();
 -- End Trigger 2: calcular preços e atualizar total da transação
 
--- Start Trigger 3: 
--- End Trigger 3:
+-- Start Trigger 3: se o produto for desativado remover das promoções em que está cadastrado
+CREATE OR REPLACE FUNCTION verificar_promocoes_ao_atualizar_produto()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.ativo = FALSE AND OLD.ativo = TRUE THEN
+        UPDATE Promocoes
+        SET produtos_em_promocao = array_remove(produtos_em_promocao, NEW.id_produto)
+        WHERE ativa = TRUE 
+          AND CURRENT_TIMESTAMP BETWEEN data_inicio AND data_fim
+          AND NEW.id_produto = ANY(produtos_em_promocao);
+        RAISE NOTICE 'Produto % removido de promoções ativas devido a desativação', NEW.id_produto;
+    END IF;
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_verificar_promocoes_ao_atualizar_produto
+AFTER UPDATE ON Produto
+FOR EACH ROW
+EXECUTE FUNCTION verificar_promocoes_ao_atualizar_produto();
+-- End Trigger 3: Verificar promoções ativas ao atualizar produtos
