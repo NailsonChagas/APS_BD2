@@ -87,7 +87,14 @@ BEGIN
     
     NEW.preco_unitario := preco_final;
     NEW.preco_total := NEW.preco_unitario * NEW.quantidade;
-    
+
+    -- atualizando o produto da transacao
+    UPDATE ItemTransacao
+    SET preco_unitario = NEW.preco_unitario,
+        preco_total = NEW.preco_total
+    WHERE id_transacao = NEW.id_transacao AND id_produto = NEW.id_produto;
+
+
     -- Atualização do total da transação (original da tr_atualizar_total_transacao)
     UPDATE Transacao
     SET valor_total = valor_total + NEW.preco_total
