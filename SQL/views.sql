@@ -81,17 +81,3 @@ GROUP BY
 ORDER BY 
     pr.data_inicio DESC;
 -- End View 3: permite analisar a eficácia das campanhas promocionais
-
-SELECT * FROM Clientes;
-
-SELECT * FROM Estoque;
-
-SELECT * FROM Produto;
-
-SELECT * FROM Transacao;
-
-SELECT * FROM ItemTransacao;
-
-SELECT * FROM Promocoes;
-
-SELECT * FROM Fornecedores;
