@@ -16,6 +16,8 @@ TIPOS_TRANSACAO = ['VENDA', 'COMPRA']
 clientes = []
 fornecedores = []
 
+querys = []
+
 print("-- CLIENTES")
 for _ in range(NUM_CLIENTES):
     cpf = fake.cpf().replace('.', '').replace('-', '')
@@ -24,7 +26,7 @@ for _ in range(NUM_CLIENTES):
     endereco = fake.address().replace('\n', ', ').replace("'", "''")
     telefone = fake.phone_number()
     email = fake.email()
-    print(f"INSERT INTO Clientes (cpf_cnpj, nome, endereco, telefone, email) VALUES ('{cpf}', '{nome}', '{endereco}', '{telefone}', '{email}');")
+    querys.append(f"INSERT INTO Clientes (cpf_cnpj, nome, endereco, telefone, email) VALUES ('{cpf}', '{nome}', '{endereco}', '{telefone}', '{email}');")
 
 print("\n-- FORNECEDORES")
 for _ in range(NUM_FORNECEDORES):
@@ -35,7 +37,7 @@ for _ in range(NUM_FORNECEDORES):
     contato = fake.name().replace("'", "''")
     email = fake.email()
     telefone = fake.phone_number()
-    print(f"INSERT INTO Fornecedores (cnpj, nome_empresa, localizacao, contato, email, telefone) VALUES ('{cnpj}', '{nome_empresa}', '{localizacao}', '{contato}', '{email}', '{telefone}');")
+    querys.append(f"INSERT INTO Fornecedores (cnpj, nome_empresa, localizacao, contato, email, telefone) VALUES ('{cnpj}', '{nome_empresa}', '{localizacao}', '{contato}', '{email}', '{telefone}');")
 
 print("\n-- PRODUTOS")
 for i in range(NUM_PRODUTOS):
@@ -43,7 +45,7 @@ for i in range(NUM_PRODUTOS):
     nome = fake.word().capitalize()
     descricao = fake.sentence(nb_words=6).replace("'", "''")
     preco = round(random.uniform(10, 500), 2)
-    print(f"INSERT INTO Produto (id_produto, nome, descricao, preco) VALUES ('{id_produto}', '{nome}', '{descricao}', {preco});")
+    querys.append(f"INSERT INTO Produto (id_produto, nome, descricao, preco) VALUES ('{id_produto}', '{nome}', '{descricao}', {preco});")
 
 # ---------------------------
 # Estoque: gerado e mantido
@@ -55,7 +57,7 @@ for i in range(NUM_PRODUTOS):
     produto_id = f"{789100000000 + i}"
     quantidade = random.randint(10, 100)
     estoque_disponivel[produto_id] = quantidade
-    print(f"INSERT INTO Estoque (id_produto, quantidade) VALUES ('{produto_id}', {quantidade});")
+    querys.append(f"INSERT INTO Estoque (id_produto, quantidade) VALUES ('{produto_id}', {quantidade});")
 
 # ---------------------------
 # PROMOÇÕES
@@ -69,7 +71,7 @@ for id_promocao in range(1, NUM_PROMOCOES + 1):
     qtd_produtos = random.randint(1, 4)
     produtos_ids = list(set([f"{789100000000 + random.randint(0, NUM_PRODUTOS - 1)}" for _ in range(qtd_produtos)]))
     produtos_sql_array = "ARRAY[" + ", ".join(f"'{pid}'" for pid in produtos_ids) + "]"
-    print(f"INSERT INTO Promocoes (nome_promocao, data_inicio, data_fim, porcentagem, produtos_em_promocao, ativa) VALUES ('{nome_promocao}', '{data_inicio}', '{data_fim}', {porcentagem}, {produtos_sql_array}, TRUE);")
+    querys.append(f"INSERT INTO Promocoes (nome_promocao, data_inicio, data_fim, porcentagem, produtos_em_promocao, ativa) VALUES ('{nome_promocao}', '{data_inicio}', '{data_fim}', {porcentagem}, {produtos_sql_array}, TRUE);")
 
 # ---------------------------
 # TRANSACOES + ITENS
@@ -93,9 +95,8 @@ for _ in range(NUM_TRANSACOES):
     cliente_str = f"'{cliente_id}'" if cliente_id != 'NULL' else 'NULL'
     fornecedor_str = f"'{fornecedor_id}'" if fornecedor_id != 'NULL' else 'NULL'
 
-    print(
-        f"INSERT INTO Transacao (id_transacao, tipo_transacao, id_cliente, id_fornecedor, forma_pagamento, observacoes) "
-        f"VALUES ({id_transacao_atual}, '{tipo}', {cliente_str}, {fornecedor_str}, '{forma_pagamento}', '{observacoes}');"
+    querys.append(
+        f"INSERT INTO Transacao (id_transacao, tipo_transacao, id_cliente, id_fornecedor, forma_pagamento, observacoes) VALUES ({id_transacao_atual}, '{tipo}', {cliente_str}, {fornecedor_str}, '{forma_pagamento}', '{observacoes}');"
     )
 
     qtd_itens = random.randint(1, 4)
@@ -121,16 +122,30 @@ for _ in range(NUM_TRANSACOES):
         if usar_promocao and NUM_PROMOCOES > 0:
             promo_array = random.sample(range(1, NUM_PROMOCOES + 1), random.randint(1, 2))
             promo_sql = "ARRAY[" + ", ".join(str(pid) for pid in promo_array) + "]"
-            print(
-                f"INSERT INTO ItemTransacao (id_transacao, id_produto, quantidade, id_promocao) "
-                f"VALUES ({id_transacao_atual}, '{id_produto}', {quantidade}, {promo_sql});"
+            querys.append(
+                f"INSERT INTO ItemTransacao (id_transacao, id_produto, quantidade, id_promocao) VALUES ({id_transacao_atual}, '{id_produto}', {quantidade}, {promo_sql});"
             )
         else:
-            print(
-                f"INSERT INTO ItemTransacao (id_transacao, id_produto, quantidade) "
-                f"VALUES ({id_transacao_atual}, '{id_produto}', {quantidade});"
+            querys.append(
+                f"INSERT INTO ItemTransacao (id_transacao, id_produto, quantidade) VALUES ({id_transacao_atual}, '{id_produto}', {quantidade});"
             )
 
         itens_inseridos += 1
 
     id_transacao_atual += 1
+
+
+with open('4_populate_tables.sql', 'w', encoding='utf-8') as f:
+    f.write("-- Script de população de tabelas\n")
+    f.write("-- Gerado automaticamente pelo script Python\n")
+    f.write("-- Feat: Kramer, Deodaton Guilherme e Nailson\n")
+    f.write(f"-- Total de registros: {len(querys)}\n\n")
+    
+    for query in querys:
+        f.write(query + "\n")
+    
+    f.write("\n-- Fim do script de população\n")
+    f.write(f"-- Registros inseridos: {len(querys)}\n")
+
+print(f"Arquivo '4_populate_tables.sql' criado com sucesso!")
+print(f"Total de queries geradas: {len(querys)}")
