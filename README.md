@@ -3,6 +3,16 @@
 ## Objetivo
 Defina uma aplicação que envolva modelar um sistema para projetar um banco de dados. Documente cada etapa em formato de relatório técnico para entrega na data especificada.
 
+## Como executar
+- `populate_tables.sql` é criado pelo arquivo `popular.py`
+- Ordem de execução dos arquivos SQL:
+   1. `1_create_tables.sql`
+   2. `2_triggers.sql`
+   3. `3_audit.sql`
+   4. `4_populate_tables.sql`
+   5. `5_views.sql`
+   6. `6_functions.sql`
+
 ## Itens Avaliados
 
 1. **Escolha da Aplicação -> (Feito)**  
