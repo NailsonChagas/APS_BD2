@@ -1,3 +1,9 @@
+-- Aluno: Guilherme Rodrigues dos Santos
+-- Aluno: Luiz Eduardo Caldas Kramer
+-- Aluno: Matheus Deodato Cadamuro
+-- Aluno: Nailson Francisco da Silva Chagas
+-- Professor: Ives Venturi Pola
+
 DROP TABLE IF EXISTS ItemTransacao CASCADE;
 DROP TABLE IF EXISTS Transacao CASCADE;
 DROP TABLE IF EXISTS Promocoes CASCADE;

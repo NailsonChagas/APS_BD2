@@ -1,3 +1,11 @@
+-- Aluno: Guilherme Rodrigues dos Santos
+-- Aluno: Luiz Eduardo Caldas Kramer
+-- Aluno: Matheus Deodato Cadamuro
+-- Aluno: Nailson Francisco da Silva Chagas
+-- Professor: Ives Venturi Pola
+
+
+-- Testes de índices
 
 -- 1) CLIENTES — busca por nome
 -- Usa: idx_clientes_nome
@@ -129,13 +137,12 @@ FROM ItemTransacao
 WHERE id_produto = '789100000001'
 AND quantidade > 3;
 
-
+-- Testes de Funções:
 SELECT * FROM consultar_estoque_produto('789100000001');
 SELECT * FROM relatorio_vendas_periodo('2025-01-01', '2025-09-03');
 SELECT * FROM consultar_promocoes_ativas_produto('789100001375');
 
+-- Testes de Views:
 SELECT * FROM view_vendas_por_periodo_cliente;
 SELECT * FROM view_produtos_mais_vendidos;
 SELECT * FROM view_desempenho_promocoes;
-
-SELECT * FROM AuditoriaClientes;

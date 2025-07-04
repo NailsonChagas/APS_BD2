@@ -1,3 +1,9 @@
+-- Aluno: Guilherme Rodrigues dos Santos
+-- Aluno: Luiz Eduardo Caldas Kramer
+-- Aluno: Matheus Deodato Cadamuro
+-- Aluno: Nailson Francisco da Silva Chagas
+-- Professor: Ives Venturi Pola
+
 -- registrara todas as alterações feitas nos dados dos clientes
 CREATE TABLE AuditoriaClientes (
     id_auditoria SERIAL PRIMARY KEY,

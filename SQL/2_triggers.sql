@@ -1,3 +1,9 @@
+-- Aluno: Guilherme Rodrigues dos Santos
+-- Aluno: Luiz Eduardo Caldas Kramer
+-- Aluno: Matheus Deodato Cadamuro
+-- Aluno: Nailson Francisco da Silva Chagas
+-- Professor: Ives Venturi Pola
+
 -- Start Trigger 1: atualizar estoque com base em inserção em ItemTransacao
 CREATE OR REPLACE FUNCTION atualizar_estoque()
 RETURNS TRIGGER AS $$

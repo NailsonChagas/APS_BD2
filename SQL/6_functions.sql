@@ -1,3 +1,9 @@
+-- Aluno: Guilherme Rodrigues dos Santos
+-- Aluno: Luiz Eduardo Caldas Kramer
+-- Aluno: Matheus Deodato Cadamuro
+-- Aluno: Nailson Francisco da Silva Chagas
+-- Professor: Ives Venturi Pola
+
 -- Start Function 1: Consulta de disponiblidade de produto
 CREATE OR REPLACE FUNCTION consultar_estoque_produto(
     p_id_produto VARCHAR(20)

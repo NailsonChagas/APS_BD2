@@ -1,3 +1,9 @@
+-- Aluno: Guilherme Rodrigues dos Santos
+-- Aluno: Luiz Eduardo Caldas Kramer
+-- Aluno: Matheus Deodato Cadamuro
+-- Aluno: Nailson Francisco da Silva Chagas
+-- Professor: Ives Venturi Pola
+
 -- Start View 1: transações de venda, agrupadas por cliente e período de tempo, permitindo análises de desempenho de vendas e comportamento do cliente
 CREATE OR REPLACE VIEW view_vendas_por_periodo_cliente AS
 SELECT 
