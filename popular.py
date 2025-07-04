@@ -7,10 +7,10 @@ Faker.seed(42)
 random.seed(42)
 
 NUM_CLIENTES = 2000
-NUM_FORNECEDORES = 500
-NUM_PRODUTOS = 15000
+NUM_FORNECEDORES = 2000
+NUM_PRODUTOS = 2000
 NUM_TRANSACOES = 20000
-NUM_PROMOCOES = 50
+NUM_PROMOCOES = 2000
 TIPOS_TRANSACAO = ['VENDA', 'COMPRA']
 
 clientes = []
@@ -18,9 +18,26 @@ fornecedores = []
 
 querys = []
 
+cpfs_gerados = set()
+cnpjs_gerados = set()
+
+def gerar_cpf_unico():
+    while True:
+        cpf = fake.cpf().replace('.', '').replace('-', '')
+        if cpf not in cpfs_gerados:
+            cpfs_gerados.add(cpf)
+            return cpf
+
+def gerar_cnpj_unico():
+    while True:
+        cnpj = fake.cnpj().replace('.', '').replace('/', '').replace('-', '')
+        if cnpj not in cnpjs_gerados:
+            cnpjs_gerados.add(cnpj)
+            return cnpj
+
 print("-- CLIENTES")
 for _ in range(NUM_CLIENTES):
-    cpf = fake.cpf().replace('.', '').replace('-', '')
+    cpf = gerar_cpf_unico()
     clientes.append(cpf)
     nome = fake.name().replace("'", "''")
     endereco = fake.address().replace('\n', ', ').replace("'", "''")
@@ -30,7 +47,7 @@ for _ in range(NUM_CLIENTES):
 
 print("\n-- FORNECEDORES")
 for _ in range(NUM_FORNECEDORES):
-    cnpj = fake.cnpj().replace('.', '').replace('/', '').replace('-', '')
+    cnpj = gerar_cnpj_unico()
     fornecedores.append(cnpj)
     nome_empresa = fake.company().replace("'", "''")
     localizacao = fake.address().replace('\n', ', ').replace("'", "''")
@@ -71,7 +88,8 @@ for id_promocao in range(1, NUM_PROMOCOES + 1):
     qtd_produtos = random.randint(1, 4)
     produtos_ids = list(set([f"{789100000000 + random.randint(0, NUM_PRODUTOS - 1)}" for _ in range(qtd_produtos)]))
     produtos_sql_array = "ARRAY[" + ", ".join(f"'{pid}'" for pid in produtos_ids) + "]"
-    querys.append(f"INSERT INTO Promocoes (nome_promocao, data_inicio, data_fim, porcentagem, produtos_em_promocao, ativa) VALUES ('{nome_promocao}', '{data_inicio}', '{data_fim}', {porcentagem}, {produtos_sql_array}, TRUE);")
+    ativa = random.choice([True, False])
+    querys.append(f"INSERT INTO Promocoes (nome_promocao, data_inicio, data_fim, porcentagem, produtos_em_promocao, ativa) VALUES ('{nome_promocao}', '{data_inicio}', '{data_fim}', {porcentagem}, {produtos_sql_array},  {ativa});")
 
 # ---------------------------
 # TRANSACOES + ITENS
