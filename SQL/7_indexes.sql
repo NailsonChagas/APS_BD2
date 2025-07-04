@@ -14,7 +14,7 @@ CREATE INDEX idx_produto_nome ON Produto (nome);
 CREATE INDEX idx_estoque_id_produto ON Estoque (id_produto);
 
 -- PROMOCOES
-CREATE INDEX idx_promocoes_periodo_ativas ON Promocoes (data_inicio, data_fim) WHERE ativa = TRUE;
+CREATE INDEX idx_promocoes_periodo_ativas ON Promocoes (data_fim, data_inicio) WHERE ativa = TRUE;
 CREATE INDEX idx_promocoes_produtos_ativos_gin ON Promocoes USING GIN (produtos_em_promocao) WHERE ativa = TRUE;
 
 -- TRANSACAO
