@@ -128,3 +128,14 @@ SELECT *
 FROM ItemTransacao
 WHERE id_produto = '789100000001'
 AND quantidade > 3;
+
+
+SELECT * FROM consultar_estoque_produto('789100000001');
+SELECT * FROM relatorio_vendas_periodo('2025-01-01', '2025-09-03');
+SELECT * FROM consultar_promocoes_ativas_produto('789100001375');
+
+SELECT * FROM view_vendas_por_periodo_cliente;
+SELECT * FROM view_produtos_mais_vendidos;
+SELECT * FROM view_desempenho_promocoes;
+
+SELECT * FROM AuditoriaClientes;

@@ -1,11 +1,13 @@
 -- Start Function 1: Consulta de disponiblidade de produto
 CREATE OR REPLACE FUNCTION consultar_estoque_produto(
     p_id_produto VARCHAR(20)
+)
 RETURNS TABLE (
     nome_produto VARCHAR(100),
     quantidade_estoque INT,
     preco_atual DECIMAL(10,2),
     status VARCHAR(10)
+)
 AS $$
 BEGIN
     RETURN QUERY
@@ -17,7 +19,7 @@ BEGIN
             WHEN e.quantidade > 0 AND p.ativo THEN 'DISPONÍVEL'
             WHEN e.quantidade <= 0 AND p.ativo THEN 'ESGOTADO'
             ELSE 'INATIVO'
-        END AS status
+		END::VARCHAR(10) AS status
     FROM 
         Produto p
     JOIN 
