@@ -12,6 +12,7 @@ Defina uma aplicação que envolva modelar um sistema para projetar um banco de 
    4. `4_populate_tables.sql`
    5. `5_views.sql`
    6. `6_functions.sql`
+   7. `7_indexes.sql`
 
 ## Itens Avaliados
 
