@@ -21,7 +21,7 @@ WHERE email = 'maria46@example.net';
 EXPLAIN ANALYZE
 SELECT *
 FROM Fornecedores
-WHERE nome_empresa LIKE 'Rocha S.A.';
+WHERE nome_empresa LIKE 'Guerra S/A';
 
 -- 4) PRODUTO — busca por nome
 -- Usa: idx_produto_nome
@@ -92,7 +92,7 @@ SELECT *
 FROM Transacao
 WHERE id_fornecedor = '89067423000132'
 AND tipo_transacao = 'COMPRA'
-AND data BETWEEN '2025-01-01' AND '2025-06-30';
+AND data BETWEEN '2025-01-01' AND '2025-08-30';
 
 -- 12) ITEMTRANSACAO — itens de uma transação
 -- Usa: idx_itemtransacao_id_transacao
