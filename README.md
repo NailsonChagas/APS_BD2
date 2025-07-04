@@ -38,17 +38,17 @@ Defina uma aplicação que envolva modelar um sistema para projetar um banco de 
 4. **Script SQL (PostgreSQL) -> (Feito)**  
    - Gere o script de criação das tabelas no PostgreSQL, incluindo todas as restrições necessárias.
 
-5. **População das Tabelas**  
+5. **População das Tabelas -> (Feito)**  
    - Insira dados nas tabelas (preferencialmente reais, se possível), suficientes para realizar consultas.
 
-6. **Índices**  
+6. **Índices -> (Feito)** 
    - Crie índices adequados para otimizar consultas.  
    - Indique quais consultas foram beneficiadas e mostre o resultado do `EXPLAIN`.
 
-7. **Funções**  
+7. **Funções -> (Feito)** 
    - Crie 3 funções que representem consultas comuns ou realizem tarefas específicas nas tabelas.
 
-8. **Visões e Auditoria**  
+8. **Visões e Auditoria -> (Feito)** 
    - Crie 3 visões (views) comuns.  
    - Implemente uma tabela de auditoria para uma das tabelas principais.
 
